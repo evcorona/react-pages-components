@@ -1,61 +1,60 @@
-import { Component } from 'react'
-import PageTitle from '../Components/PageTitle/index'
-import CardProduct from '../Components/CardProduct/index'
-
+/* Import Tools */
+import React, { useState, useEffect } from 'react';
 import {
   Col,
   CardGroup
 } from 'reactstrap'
 
+/* Import Components */
+import PageTitle from '../Components/PageTitle/index'
+import CardProduct from '../Components/CardProduct/index'
+
 
 let endpoint = "https://cherry-practices-default-rtdb.firebaseio.com/marketplace/products/.json"
 
-class ProductCatalog extends Component {
-  constructor() {
-    super()
-    this.state = {
-      productCollection: {}
-    }
+function ProductCatalog() {
+  /* Hooks */
+  const [productCollection, setProductCollection] = useState({})
 
-  }
-
-  getProductData() {
+  /* Functions */
+  /* HTTP request GET onDemand*/
+  const getProductData = () => {
     fetch(endpoint)
       .then(response => response.json())
       .then(json => {
         console.log(json)
-        this.setState({ productCollection: json })
+        setProductCollection(json)
       })
   }
 
+  /* HTTP request GET mountingComponent
   componentDidMount() {
-    this.getProductData()
+    getProductData()
   }
+  */
 
-  render() {
-    return (
-      <Col xs="12" >
-        <PageTitle
-          title="¡Mira nuestros productos!" />
+  return (
+    <Col xs="12" >
+      <PageTitle
+        title="¡Mira nuestros productos!" />
 
-        <CardGroup>
-          {
-            Object.keys(this.state.productCollection).map(key => {
-              let { name, imageURL, price, description } = this.state.productCollection[key]
-              return (
-                <CardProduct
-                  name={name}
-                  imageURL={imageURL}
-                  price={price}
-                  description={description}
-                />
-              )
-            })
-          }
-        </CardGroup>
-      </Col>
-    )
-  }
+      <CardGroup>
+        {
+          Object.keys(productCollection).map(key => {
+            let { name, imageURL, price, description } = productCollection[key]
+            return (
+              <CardProduct
+                name={name}
+                imageURL={imageURL}
+                price={price}
+                description={description}
+              />
+            )
+          })
+        }
+      </CardGroup>
+    </Col>
+  )
 }
 
 export default ProductCatalog

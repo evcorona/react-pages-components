@@ -1,7 +1,6 @@
 import ProductForm from '../Components/ProductForm/index'
 import PageTitle from '../Components/PageTitle/index'
 
-
 import {
   Col
 } from 'reactstrap'

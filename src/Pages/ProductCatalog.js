@@ -33,6 +33,10 @@ function ProductCatalog() {
   }
   */
 
+  useEffect( () => {
+    getProductData()
+  },[])
+ 
   return (
     <Col xs="12" >
       <PageTitle
